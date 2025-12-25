@@ -1,17 +1,6 @@
-/*========================================
-  ENABLE OUTPUT
-========================================*/
-SET SERVEROUTPUT ON;
+-- Bank Account Management System (BAMS)
 
-/*========================================
-  DROP OBJECTS (OPTIONAL – IF RE-RUNNING)
-========================================*/
--- DROP TABLE transactions;
--- DROP TABLE accounts;
--- DROP TABLE customers;
--- DROP SEQUENCE cust_seq;
--- DROP SEQUENCE acc_seq;
--- DROP SEQUENCE txn_seq;
+SET SERVEROUTPUT ON;
 
 /*========================================
   1. TABLES

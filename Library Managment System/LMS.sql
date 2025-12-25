@@ -1,18 +1,6 @@
-/*=====================================================
-  ENABLE OUTPUT
-=====================================================*/
+-- Library Management System (LMS)
 SET SERVEROUTPUT ON;
 
-/*=====================================================
-  OPTIONAL CLEANUP (use if re-running)
-=====================================================*/
--- DROP TRIGGER trg_auto_fine;
--- DROP TABLE issue_return;
--- DROP TABLE books;
--- DROP TABLE members;
--- DROP SEQUENCE book_seq;
--- DROP SEQUENCE member_seq;
--- DROP SEQUENCE issue_seq;
 
 /*=====================================================
   1. TABLES

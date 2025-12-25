@@ -1,17 +1,5 @@
-/*=====================================================
-  ENABLE OUTPUT
-=====================================================*/
+-- Employee Payroll Management System (EPMS)
 SET SERVEROUTPUT ON;
-
-/*=====================================================
-  (OPTIONAL) DROP OBJECTS – use if re-running
-=====================================================*/
--- DROP TABLE salary_audit;
--- DROP TABLE salary_details;
--- DROP TABLE employees;
--- DROP TABLE departments;
--- DROP SEQUENCE emp_seq;
--- DROP SEQUENCE dept_seq;
 
 /*=====================================================
   1. TABLE CREATION
