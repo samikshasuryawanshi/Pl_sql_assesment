@@ -137,6 +137,14 @@ BEGIN
     DBMS_OUTPUT.PUT_LINE('  BOOK RETURNED - ');
     DBMS_OUTPUT.PUT_LINE('  Issue ID : ' || p_issue_id);
     DBMS_OUTPUT.PUT_LINE('  Fine     : ' || v_fine);
+
+    EXCEPTION
+    WHEN NO_DATA_FOUND THEN
+        DBMS_OUTPUT.PUT_LINE('   No record found for Issue ID: ' || p_issue_id);
+        DBMS_OUTPUT.PUT_LINE('   Please check the Issue ID and try again.');
+
+    WHEN OTHERS THEN
+        DBMS_OUTPUT.PUT_LINE('  Unexpected error: ' || SQLERRM);
 END;
 
 END library_pkg;
@@ -200,3 +208,57 @@ BEGIN
     library_pkg.return_book(3);
 END;
 /
+
+
+
+/*=====================================================
+  10. FINAL ISSUE / RETURN REPORT
+=====================================================*/
+DECLARE
+    CURSOR c IS
+        SELECT i.issue_id,
+               m.member_name,
+               b.title,
+               TO_CHAR(i.issue_date, 'DD-MON-YYYY') AS issue_date,
+               NVL(TO_CHAR(i.return_date, 'DD-MON-YYYY'), 'NOT RETURNED') AS return_date,
+               i.fine
+        FROM issue_return i
+        JOIN members m ON i.member_id = m.member_id
+        JOIN books b ON i.book_id = b.book_id
+        ORDER BY i.issue_id;
+BEGIN
+    DBMS_OUTPUT.PUT_LINE('==============================================================');
+    DBMS_OUTPUT.PUT_LINE('               ISSUE / RETURN DETAILS REPORT');
+    DBMS_OUTPUT.PUT_LINE('==============================================================');
+    DBMS_OUTPUT.PUT_LINE(
+        RPAD('ISSUE ID',8) || ' | ' ||
+        RPAD('MEMBER',12) || ' | ' ||
+        RPAD('BOOK',25) || ' | ' ||
+        RPAD('ISSUE DATE',12) || ' | ' ||
+        RPAD('RETURN DATE',14) || ' | ' ||
+        'FINE'
+    );
+    DBMS_OUTPUT.PUT_LINE(
+        RPAD('-',8,'-') || '-+-' ||
+        RPAD('-',12,'-') || '-+-' ||
+        RPAD('-',25,'-') || '-+-' ||
+        RPAD('-',12,'-') || '-+-' ||
+        RPAD('-',14,'-') || '-+-' ||
+        RPAD('-',5,'-')
+    );
+
+    FOR r IN c LOOP
+        DBMS_OUTPUT.PUT_LINE(
+            RPAD(r.issue_id,8) || ' | ' ||
+            RPAD(r.member_name,12) || ' | ' ||
+            RPAD(r.title,25) || ' | ' ||
+            RPAD(r.issue_date,12) || ' | ' ||
+            RPAD(r.return_date,14) || ' | ' ||
+            r.fine
+        );
+    END LOOP;
+
+    DBMS_OUTPUT.PUT_LINE('==============================================================');
+END;
+/
+
